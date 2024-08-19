@@ -1,5 +1,0 @@
-i3-wm.gaps.inner.size: 20
-i3-wm.window.border.size: 10
-
-!Also change hide_edge_borders to smart_no_gaps in /etc/regolith/i3/config
-i3-wm.gaps.smart: inverse_outer
