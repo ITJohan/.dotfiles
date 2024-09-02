@@ -56,6 +56,7 @@ lsp_zero.extend_lspconfig({
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
 })
 
+require('lspconfig').postgres_lsp.setup({})
 require('mason').setup({})
 require('mason-lspconfig').setup({
   handlers = {
@@ -125,20 +126,21 @@ function InitFloq()
   vim.cmd("startinsert")
   vim.api.nvim_input("cd ../floq-db && docker compose up<CR>")
   vim.api.nvim_input('<C-\\><C-n>')
+  vim.api.nvim_input('<S-G>')
 
   vim.defer_fn(function()
     vim.cmd(":vert term")
     vim.cmd("startinsert")
     vim.api.nvim_input("npm start<CR>")
     vim.api.nvim_input('<C-\\><C-n>')
-    vim.api.nvim_input('gg')
+    vim.api.nvim_input('<S-G>')
 
     vim.defer_fn(function()
       vim.cmd(":vert term")
       vim.cmd("startinsert")
       vim.api.nvim_input("cd ../floq && npm start<CR>")
       vim.api.nvim_input('<C-\\><C-n>')
-      vim.api.nvim_input('gg')
+      vim.api.nvim_input('<S-G>')
       vim.cmd(":resize 20")
       vim.api.nvim_input("<C-w>k")
     end, 100)
@@ -152,3 +154,39 @@ vim.keymap.set("v", '"+y', function()
   local yanked_text = vim.fn.getreg('"')
   vim.fn.SendViaOSC52(yanked_text)
 end, { noremap = true, silent = true })
+
+--
+-- Highlight symbol under cursor
+--
+
+-- time it takes to trigger the `CursorHold` event
+vim.opt.updatetime = 400
+
+local function highlight_symbol(event)
+  local id = vim.tbl_get(event, 'data', 'client_id')
+  local client = id and vim.lsp.get_client_by_id(id)
+  if client == nil or not client.supports_method('textDocument/documentHighlight') then
+    return
+  end
+
+  local group = vim.api.nvim_create_augroup('highlight_symbol', {clear = false})
+
+  vim.api.nvim_clear_autocmds({buffer = event.buf, group = group})
+
+  vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {
+    group = group,
+    buffer = event.buf,
+    callback = vim.lsp.buf.document_highlight,
+  })
+
+  vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {
+    group = group,
+    buffer = event.buf,
+    callback = vim.lsp.buf.clear_references,
+  })
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'Setup highlight symbol',
+  callback = highlight_symbol,
+})
