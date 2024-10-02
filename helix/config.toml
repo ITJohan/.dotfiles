@@ -1,0 +1,15 @@
+theme = "catppuccin_frappe"
+
+[editor]
+true-color = true
+line-number = "relative"
+bufferline = "always"
+cursorline = true
+color-modes = true
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+
+[keys.normal]
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
