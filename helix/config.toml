@@ -1,15 +1,15 @@
 theme = "catppuccin_frappe"
 
 [editor]
-true-color = true
-line-number = "relative"
-bufferline = "always"
-cursorline = true
-color-modes = true
+true-color = true # Crostini color fix
+line-number = "relative" # Relative + current
+bufferline = "always" # Open buffers in "tabs"
+cursorline = true # Highlight current line
+color-modes = true # Colorize input mode
 
 [editor.indent-guides]
-render = true
-character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+render = true # Enable indent guides
+character = "╎" # Character for indent guides
 
 [keys.normal]
-C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"] # Ctrl-g to open lazygit
