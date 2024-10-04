@@ -13,3 +13,4 @@ character = "╎" # Character for indent guides
 
 [keys.normal]
 C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"] # Ctrl-g to open lazygit
+C-y = [":new", ":insert-output lazydocker", ":buffer-close!", ":redraw"] # Ctrl-y to open lazydocker
