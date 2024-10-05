@@ -11,6 +11,9 @@ color-modes = true # Colorize input mode
 render = true # Enable indent guides
 character = "╎" # Character for indent guides
 
+[editor.cursor-shape]
+insert = "bar"
+
 [keys.normal]
 C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"] # Ctrl-g to open lazygit
 C-y = [":new", ":insert-output lazydocker", ":buffer-close!", ":redraw"] # Ctrl-y to open lazydocker
