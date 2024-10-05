@@ -9,7 +9,7 @@ color-modes = true # Colorize input mode
 
 [editor.indent-guides]
 render = true # Enable indent guides
-character = "╎" # Character for indent guides
+character = "•" # Character for indent guides
 
 [editor.cursor-shape]
 insert = "bar"
